@@ -91,9 +91,8 @@ import java.util.logging.Logger;
 @JsModule("./translations/vi.js")
 @JsModule("./translations/zh.js")
 @JsModule("./translations/zh-cn.js")
-
 @CssImport("./ckeditor.css")
-@NpmPackage(value = "lit", version = "^2.6.1")
+@CssImport("./styles.css")
 public class VaadinCKEditor extends CustomField<String> implements HasConfig {
 
     private String editorData;

@@ -55,9 +55,9 @@ public class Config {
             Toolbar.bulletedList,
             Toolbar.numberedList,
             Toolbar.alignment,
-            Toolbar.todoList,
             Toolbar.indent,
             Toolbar.outdent,
+            Toolbar.lineHeight,
             Toolbar.code,
             Toolbar.sourceEditing,
             Toolbar.codeBlock,
@@ -117,6 +117,7 @@ public class Config {
         configs.put(ConfigType.heading, Json.createObject());
         configs.put(ConfigType.highlight, Json.createObject());
         configs.put(ConfigType.image, Json.createObject());
+        configs.put(ConfigType.lineHeight, Json.createObject());
         configs.put(ConfigType.indentBlock, Json.createObject());
         configs.put(ConfigType.initialData, Json.create(""));
         configs.put(ConfigType.language, Json.create("en"));
@@ -125,7 +126,6 @@ public class Config {
         configs.put(ConfigType.mention, Json.createObject());
         configs.put(ConfigType.placeholder, Json.create(""));
         configs.put(ConfigType.restrictedEditing, Json.createObject());
-        configs.put(ConfigType.simpleUpload, Json.createObject());
         configs.put(ConfigType.table, Json.createObject());
         configs.put(ConfigType.title, Json.createObject());
         configs.put(ConfigType.typing, Json.createObject());
@@ -152,6 +152,7 @@ public class Config {
         configs.put(ConfigType.fontSize, jsonObject.get(ConfigType.fontSize.name()));
         configs.put(ConfigType.heading, jsonObject.get(ConfigType.heading.name()));
         configs.put(ConfigType.highlight, jsonObject.get(ConfigType.highlight.name()));
+        configs.put(ConfigType.lineHeight, jsonObject.get(ConfigType.lineHeight.name()));
         configs.put(ConfigType.image, jsonObject.get(ConfigType.image.name()));
         configs.put(ConfigType.indentBlock, jsonObject.get(ConfigType.indentBlock.name()));
         configs.put(ConfigType.initialData, jsonObject.get(ConfigType.initialData.name()));
@@ -164,7 +165,6 @@ public class Config {
                                                         toJsonArray(removedPlugins):
                                                         jsonObject.get(ConfigType.removePlugins.name()));
         configs.put(ConfigType.restrictedEditing, jsonObject.get(ConfigType.restrictedEditing.name()));
-        configs.put(ConfigType.simpleUpload, jsonObject.get(ConfigType.simpleUpload.name()));
         configs.put(ConfigType.table, jsonObject.get(ConfigType.table.name()));
         configs.put(ConfigType.title, jsonObject.get(ConfigType.title.name()));
         configs.put(ConfigType.typing, jsonObject.get(ConfigType.typing.name()));
@@ -224,7 +224,7 @@ public class Config {
         return json.getArray(member);
     }
 
-    JsonArray toJsonArray(List<String> options) {
+    JsonArray toJsonArray(List<?> options) {
         return Json.instance().parse(new Gson().toJson(options));
     }
 
@@ -737,23 +737,6 @@ public class Config {
         configs.put(ConfigType.restrictedEditing, restrictedEditing);
     }
 
-    /**
-     *
-     * @param uploadUrl The path (URL) to the server (application) which handles the file upload. When specified,
-     *                  enables the automatic upload of resources (images) inserted into the editor content.
-     * @param withCredentials This flag enables the withCredentials property of the request sent to the server
-     *                        during the upload. It affects cross-site requests only and, for instance,
-     *                        allows credentials such as cookies to be sent along with the request.
-     * @param headers An object that defines additional headers sent with the request to the server during the upload.
-     *                This is the right place to implement security mechanisms like authentication and CSRF protection.
-     */
-    public void setSimpleUpload(String uploadUrl, Boolean withCredentials, List<String> headers) {
-        JsonObject simpleUpload = Json.createObject();
-        simpleUpload.put(Config.uploadUrl, Json.create(uploadUrl));
-        simpleUpload.put("withCredentials", Json.create(withCredentials));
-        simpleUpload.put("headers", toJsonArray(headers));
-        configs.put(ConfigType.simpleUpload, simpleUpload);
-    }
 
     /**
      * The configuration of the table feature. Used by the table feature in the
@@ -769,6 +752,16 @@ public class Config {
         table.put("tableCellProperties", tableCellProperties);
         table.put("tableProperties", tableCellProperties);
         configs.put(ConfigType.table, table);
+    }
+
+    /**
+     * The configuration of the line height feature.
+     * @param options Items to be placed in the line height toolbar
+     */
+    public void setLineHeight(List<Integer> options) {
+        JsonObject lineHeight = Json.createObject();
+        lineHeight.put("options", toJsonArray(options));
+        configs.put(ConfigType.lineHeight, lineHeight);
     }
 
     /**
