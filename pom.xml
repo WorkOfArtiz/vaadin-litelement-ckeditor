@@ -6,7 +6,7 @@
     <groupId>com.wontlost</groupId>
     <artifactId>ckeditor-vaadin</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
     <name>CKEditorVaadin</name>
     <description>Integration of CKEditor 5 for Vaadin</description>
     <scm>
@@ -16,7 +16,7 @@
     </scm>
 
     <properties>
-        <vaadin.version>24.2.6</vaadin.version>
+        <vaadin.version>24.3.8</vaadin.version>
         <vaadin.productionMode>false</vaadin.productionMode>
 
         <maven.compiler.source>17</maven.compiler.source>
